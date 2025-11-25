@@ -90,6 +90,24 @@ function login(req, res){
 
 }
 
+function showUser(req, res){
+    const id = req.params.id;
+
+    models.User.findByPk(id).then(result =>{
+    if(result){
+        res.status(200).json(result);
+    }else{
+        res.status(404).json({
+            message: "No se encontró el usuario"
+        })
+    }
+    }).catch(error =>{
+        res.status(500).json({
+            message: "Algo salió mal"
+        })
+    });
+}
+
 async function userUpdate(req, res) {
     const id = req.params.id; 
 
@@ -150,6 +168,7 @@ function userDelete(req, res){
 module.exports = {
     signUp: signUp,
     login: login,
+    showUser:showUser,
     userUpdate: userUpdate,
     userDelete: userDelete
 }
